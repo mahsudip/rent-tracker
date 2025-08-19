@@ -127,24 +127,21 @@ function loadTenants() {
                 row.innerHTML = `
                     <td class="tenantName" data-title="Name:">${tenant.fullName}</td>
                     <td class="tenantCompany" data-title="Company:">${tenant.company || 'N/A'}</td>
-                    <button class="btn btn-sm btn-info collapse-btn" onClick="showDetails()" title="View Details">
-                        <i class="bi bi-eye-fill"></i>
-                    </button>
                     <td class="mobile-hide" data-title="Mobile No.:">${tenant.contact}</td>
                     <td class="mobile-hide" data-title="Property:">${propertyMap[tenant.propertyId] || 'N/A'}</td>
                     <td class="mobile-hide" data-title="Contract:">${tenant.contractYears} years</td>
                     <td class="mobile-hide" data-title="Started At:">${tenant.startDateAD}</td>
                     <td class="mobile-hide" data-title="Amount:">NPR ${tenant.amount}/ ${tenant.amountType}</td>
                     <td class="mobile-hide" data-title="Status:"><span class="badge ${tenant.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${tenant.status}</span></td>
-                    <td class="mobile-hide">
-                        <button class="btn btn-sm btn-info view-btn" data-id="${tenant.id}" title="View Details">
-                            <i class="bi bi-eye-fill"></i>
+                    <td class="action-btns">
+                        <button class="btn btn-sm btn-primary view-btn" data-id="${tenant.id}" title="View Details">
+                            <i class="fa-solid fa-eye" style="color: #ffffff;"></i>
                         </button>
                         <button class="btn btn-sm btn-primary edit-btn" data-id="${tenant.id}" title="Edit">
-                            <i class="bi bi-pencil-fill"></i>
+                            <i class="fa-solid fa-pen" style="color: #ffffff;"></i>
                         </button>
                         <button class="btn btn-sm btn-danger delete-btn" data-id="${tenant.id}" title="Delete">
-                            <i class="bi bi-trash-fill"></i>
+                            <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
                         </button>
                     </td>
                 `;
@@ -495,13 +492,4 @@ function updatePaymentTenantDropdown() {
 }
 
 
-function showDetails() {
-    var elements = document.querySelectorAll(".mobile-hide");
-    elements.forEach(function(el) {
-        if (el.style.display === "none") {
-            el.style.display = "flex"; // show
-        } else {
-            el.style.display = "none"; // hide
-        }
-    });
-}
+

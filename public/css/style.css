@@ -139,10 +139,10 @@ body {
     color: var(--gray-color);
     background-color: #f8f9fa;
 }
-
+/*
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, 0.01);
-}
+}*/
 
 /* Charts */
 .chart-container {
@@ -163,8 +163,10 @@ body {
 }
 
 .btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    width: 32px;   /* same width and height */
+    height: 32px;
+    padding: 0;
+    border-radius: 50px;
 }
 
 /* Modal */
@@ -233,6 +235,8 @@ body {
     font-size: 1rem;
     vertical-align: middle;
 }
+
+
 
 /* Animations */
 @keyframes fadeIn {
