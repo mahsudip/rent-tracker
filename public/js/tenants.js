@@ -131,7 +131,7 @@ function loadTenants() {
                     <td data-title="Property:">${propertyMap[tenant.propertyId] || 'N/A'}</td>
                     <td data-title="Contract:">${tenant.contractYears} years</td>
                     <td data-title="Started At:">${tenant.startDateAD}</td>
-                    <td data-title="Amount:">NPR ${tenant.amount} /${tenant.amountType}</td>
+                    <td data-title="Amount:">NPR ${tenant.amount}/ ${tenant.amountType}</td>
                     <td data-title="Status:"><span class="badge ${tenant.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${tenant.status}</span></td>
                     <td>
                         <button class="btn btn-sm btn-info view-btn" data-id="${tenant.id}" title="View Details">
