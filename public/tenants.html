@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        @media only screen and (max-width: 800px) {
+            .mobile table{
+                width: 100%;
+            }
+            .mobile thead{
+                display: none;
+            }
+            .mobile tbody,
+            .mobile tr,
+            .mobile td {
+                display: block;
+            }
+            .mobile tr{
+                position: relative;
+                background-color: #efefef;
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 2%;
+            }
+            .mobile td{
+                display: flex;
+                justify-content: space-between;
+                padding-bottom: 5px;
+                /* text-align: right; */
+            }
+            .mobile td:before {
+                content: attr(data-title);
+                /* position: absolute; */
+                /* left: 6px; */
+                font-weight: bold;
+                display: inline-block;
+                /* width: 150px; */
+                text-align: left;
+                }
+            .mobile .tenantName:before {
+                content: none;
+                }
+            .mobile .tenantName {
+                font-size: 18px;
+                font-weight: bold;
+                }
+            .mobile .tenantCompany:before {
+                content: none;
+                }
+            .mobile .tenantCompany {
+                font-size: 14px;
+                font-style: italic;
+                margin-top: -15px;
+                }
+            .mobile td .view-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                }
+        }
+
+                
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">P</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tenants.html">Tenants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="payments.html">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">Reports</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>P2RI</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTenantModal">
+                Add New Tenant
+            </button>
+        </div>
+
+        <div class="table-responsive mobile">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Property</th>
+                        <th>Contract</th>
+                        <th>Started At</th>
+                        <th>Rent Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tenantTableBody">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Tenant Modal -->
+    <div class="modal fade" id="addTenantModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTenantForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tenantFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="tenantFullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tenantCompany" class="form-label">Company Name</label>
+                                    <input type="tel" class="form-control" id="tenantCompany" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tenantContact" class="form-label">Contact Number</label>
+                                    <input type="tel" class="form-control" id="tenantContact" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tenantCitizen" class="form-label">Citizenship Number</label>
+                                    <input type="text" class="form-control" id="tenantCitizen" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tenantAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="tenantAddress" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tenantProperty" class="form-label">Property</label>
+                                    <select class="form-select" id="tenantProperty" required>
+                                        <option value="">Select Property</option>
+                                        <!-- Filled by JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="sectionField" style="display: none;">
+                                    <label for="tenantSection" class="form-label">Section</label>
+                                    <select class="form-select" id="tenantSection">
+                                        <!-- Filled by JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contractStartDate" class="form-label">Contract Start Date</label>
+                                    <input type="date" class="form-control" id="contractStartDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contractYears" class="form-label">Contract Period (Years)</label>
+                                    <input type="number" class="form-control" id="contractYears" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="rentAmount" class="form-label">Rent Amount</label>
+                                    <input type="number" class="form-control" id="rentAmount" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Amount Type</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="amountType" id="monthly" value="month" checked>
+                                        <label class="form-check-label" for="monthly">Monthly</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="amountType" id="yearly" value="year">
+                                        <label class="form-check-label" for="yearly">Yearly</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="incrementPercent" class="form-label">Rent Increment Percentage</label>
+                                    <input type="number" class="form-control" id="incrementPercent" min="0" max="100" value="10">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="incrementInterval" class="form-label">Increment Interval (Years)</label>
+                                    <input type="number" class="form-control" id="incrementInterval" min="1" value="2">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveTenantBtn">Save Tenant</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Tenant Modal -->
+    <div class="modal fade" id="editTenantModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTenantForm">
+                        <input type="hidden" id="editTenantId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editTenantFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="editTenantFullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editTenantCompany" class="form-label">Company Name</label>
+                                    <input type="tel" class="form-control" id="editTenantCompany" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editTenantContact" class="form-label">Contact Number</label>
+                                    <input type="tel" class="form-control" id="editTenantContact" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editTenantCitizen" class="form-label">Citizenship Number</label>
+                                    <input type="text" class="form-control" id="editTenantCitizen" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editTenantAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="editTenantAddress" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editTenantProperty" class="form-label">Property</label>
+                                    <select class="form-select" id="editTenantProperty" required>
+                                        <option value="">Select Property</option>
+                                        <!-- Filled by JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="editSectionField" style="display: none;">
+                                    <label for="editTenantSection" class="form-label">Section</label>
+                                    <select class="form-select" id="editTenantSection">
+                                        <!-- Filled by JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editContractStartDate" class="form-label">Contract Start Date</label>
+                                    <input type="date" class="form-control" id="editContractStartDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editContractYears" class="form-label">Contract Period (Years)</label>
+                                    <input type="number" class="form-control" id="editContractYears" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editRentAmount" class="form-label">Rent Amount</label>
+                                    <input type="number" class="form-control" id="editRentAmount" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Amount Type</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="editAmountType" id="editMonthly" value="month" checked>
+                                        <label class="form-check-label" for="editMonthly">Monthly</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="editAmountType" id="editYearly" value="year">
+                                        <label class="form-check-label" for="editYearly">Yearly</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editIncrementPercent" class="form-label">Rent Increment Percentage</label>
+                                    <input type="number" class="form-control" id="editIncrementPercent" min="0" max="100" value="10">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editIncrementInterval" class="form-label">Increment Interval (Years)</label>
+                                    <input type="number" class="form-control" id="editIncrementInterval" min="1" value="2">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="editTenantStatus" id="editActive" value="Active" checked>
+                                <label class="form-check-label" for="editActive">Active</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="editTenantStatus" id="editInactive" value="Inactive">
+                                <label class="form-check-label" for="editInactive">Inactive</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateTenantBtn">Update Tenant</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Tenant Modal -->
+    <div class="modal fade" id="viewTenantModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tenant Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Full Name:</label>
+                                <p id="viewFullName" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Company Name:</label>
+                                <p id="viewCompany" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Contact Number:</label>
+                                <p id="viewContact" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Citizenship Number:</label>
+                                <p id="viewCitizen" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Address:</label>
+                                <p id="viewAddress" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Property:</label>
+                                <p id="viewProperty" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Section:</label>
+                                <p id="viewSection" class="form-control-static">-</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Contract Start Date:</label>
+                                <p id="viewStartDate" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Contract End Date:</label>
+                                <p id="viewEndDate" class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Rent Amount:</label>
+                                <p id="viewRentAmount" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Rent Increment Percentage:</label>
+                                <p id="viewIncrementPercent" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Increment Interval:</label>
+                                <p id="viewIncrementInterval" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Status:</label>
+                                <p id="viewStatus" class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/tenants.js"></script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">SM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tenants.html">Tenants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="payments.html">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">Reports</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Payment Management</h2>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#recordPaymentModal">
+            Record Payment
+            </button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#securityDepositModal">
+            Security Deposit
+            </button>
+        </div>
+
+        <!-- filter show -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="filterTenant" class="form-label">Filter by Tenant</label>
+                <select class="form-select" id="filterTenant">
+                    <option value="">All Tenants</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filterMonth" class="form-label">Filter by Month</label>
+                <select class="form-select" id="filterMonth">
+                    <option value="">All Months</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filterYear" class="form-label">Filter by Year</label>
+                <input type="number" class="form-control" id="filterYear" placeholder="Enter year">
+            </div>
+            <div class="col-md-2">
+                <button id="clearFilters" class="btn btn-secondary mt-4">Clear Filters</button>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Month/Year</th>
+                        <th>Tenant</th>
+                        <th>Property</th>
+                        <th class="amount-cell">Base Rent</th>
+                        <!-- <th>Additional</th> -->
+                        <!-- <th>Deduction</th> -->
+                        <th class="amount-cell">Total</th>
+                        <th>Payment Date</th>
+                        <th>Method</th>
+                        <!-- <th>Details</th> -->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentTableBody">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Record Payment Modal -->
+    <div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Record Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="recordPaymentForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tenant</label>
+                                    <select class="form-select" id="paymentTenant" required>
+                                        <option value="">Select Tenant</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Month</label>
+                                            <select class="form-select" id="paymentMonth" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Year (BS)</label>
+                                            <input type="number" class="form-control" id="paymentYear" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Base Rent (NPR)</label>
+                                    <input type="number" class="form-control" id="baseRent" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Payment Date</label>
+                                    <input type="date" class="form-control" id="paymentDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Payment Method</label>
+                                    <select class="form-select" id="paymentMethod" required>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Total Amount (NPR)</label>
+                                    <input type="number" class="form-control" id="totalAmount" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Additional Amount (NPR)</label>
+                                    <input type="number" class="form-control" id="additionalAmount" min="0" value="0">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Notes</label>
+                                    <textarea class="form-control" id="additionalNotes" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Deduction Amount (NPR)</label>
+                                    <input type="number" class="form-control" id="deductionAmount" min="0" value="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cheque Details -->
+                        <div id="chequeDetails" class="details-container" style="display: none;">
+                            <h5>Cheque Details</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Cheque Number</label>
+                                        <input type="text" class="form-control" id="chequeNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Issuing Bank</label>
+                                        <input type="text" class="form-control" id="chequeBank">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Deposited Bank</label>
+                                        <input type="text" class="form-control" id="depositedBank">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Details -->
+                        <div id="bankTransferDetails" class="details-container" style="display: none;">
+                            <h5>Bank Transfer Details</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Deposited Bank</label>
+                                <input type="text" class="form-control" id="transferBank">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="savePaymentBtn">Record Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="securityDepositModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Record Security Deposit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="securityDepositForm">
+                        <div class="mb-3">
+                            <label class="form-label">Tenant</label>
+                            <select class="form-select" id="depositTenant" required>
+                                <option value="">Select Tenant</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deposit Amount (NPR)</label>
+                            <input type="number" class="form-control" id="depositAmount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Date</label>
+                            <input type="date" class="form-control" id="depositDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <select class="form-select" id="depositMethod" required>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" id="depositNotes" rows="2"></textarea>
+                        </div>
+
+                        <!-- Cheque Details -->
+                        <div id="depositChequeDetails" class="details-container" style="display: none;">
+                            <h5>Cheque Details</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Cheque Number</label>
+                                        <input type="text" class="form-control" id="depositChequeNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Issuing Bank</label>
+                                        <input type="text" class="form-control" id="depositChequeBank">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Details -->
+                        <div id="depositBankTransferDetails" class="details-container" style="display: none;">
+                            <h5>Bank Transfer Details</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Deposited Bank</label>
+                                <input type="text" class="form-control" id="depositTransferBank">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="saveDepositBtn">Record Deposit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Payment Modal -->
+    <div class="modal fade" id="viewPaymentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Payment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tenant:</label>
+                                <p id="viewTenantName" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Property:</label>
+                                <p id="viewPropertyName" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">For Month/Year:</label>
+                                <p id="viewMonthYear" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Base Rent:</label>
+                                <p id="viewBaseRent" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Payment Date:</label>
+                                <p id="viewPaymentDate" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Payment Method:</label>
+                                <p id="viewPaymentMethod" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Total Amount:</label>
+                                <p id="viewTotalAmount" class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Additional Amount:</label>
+                                <p id="viewAdditionalAmount" class="form-control-static"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Notes:</label>
+                                <p id="viewAdditionalNotes" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Deduction Amount:</label>
+                                <p id="viewDeductionAmount" class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="viewChequeDetails">
+                        <h5>Cheque Details</h5>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cheque Number:</label>
+                            <p id="viewChequeNumber" class="form-control-static"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cheque Bank:</label>
+                            <p id="viewChequeBank" class="form-control-static"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Deposited Bank:</label>
+                            <p id="viewDepositedBank" class="form-control-static"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="viewBankTransferDetails">
+                        <h5>Bank Transfer Details</h5>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Deposited Bank:</label>
+                            <p id="viewTransferBank" class="form-control-static"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/payments.js"></script>
+</body>
+</html>
