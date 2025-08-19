@@ -32,13 +32,15 @@
                 display: flex;
                 justify-content: space-between;
                 padding-bottom: 5px;
+                font-size: 14px;
                 /* text-align: right; */
             }
             .mobile td:before {
                 content: attr(data-title);
                 /* position: absolute; */
                 /* left: 6px; */
-                font-weight: bold;
+                font-size: 14px;
+                font-weight: 600;
                 display: inline-block;
                 /* width: 150px; */
                 text-align: left;
@@ -50,6 +52,9 @@
                 font-size: 18px;
                 font-weight: bold;
                 }
+            .mobile .collapseBtn{
+                display: block!important;
+            }
             .mobile .tenantCompany:before {
                 content: none;
                 }
@@ -57,11 +62,6 @@
                 font-size: 14px;
                 font-style: italic;
                 margin-top: -15px;
-                }
-            .mobile td .view-btn {
-                position: absolute;
-                top: 20px;
-                right: 20px;
                 }
         }
 
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="tenantCompany" class="form-label">Company Name</label>
-                                    <input type="tel" class="form-control" id="tenantCompany" required>
+                                    <input type="text" class="form-control" id="tenantCompany" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="tenantContact" class="form-label">Contact Number</label>
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="editTenantCompany" class="form-label">Company Name</label>
-                                    <input type="tel" class="form-control" id="editTenantCompany" required>
+                                    <input type="text" class="form-control" id="editTenantCompany" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="editTenantContact" class="form-label">Contact Number</label>
