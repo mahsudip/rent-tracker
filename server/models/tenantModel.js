@@ -16,8 +16,14 @@ async function addTenant(tenantData) {
 
     const endDate = new Date(startDate);
     endDate.setFullYear(endDate.getFullYear() + tenantData.contractYears);
-    endDate.setTime(endDate.getTime() - 86400000); // Subtract 1 day in milliseconds
-    
+    endDate.setDate(endDate.getDate() - 1); // Subtract 1 day
+
+    // Format YYYY-MM-DD in local time
+    const formattedEndDate = endDate.getFullYear() + "-" + 
+        String(endDate.getMonth() + 1).padStart(2, "0") + "-" + 
+        String(endDate.getDate()).padStart(2, "0");
+
+
     const newTenant = {
         id: Date.now().toString(),
         fullName: tenantData.fullName,
@@ -30,8 +36,8 @@ async function addTenant(tenantData) {
         contractYears: tenantData.contractYears,
         startDateAD: tenantData.startDateAD,
         startDateBS: tenantData.startDateAD,
-        endDateAD: endDate.toISOString().split('T')[0],
-        endDateBS: endDate.toISOString().split('T')[0],
+        endDateAD: formattedEndDate,
+        endDateBS: formattedEndDate,
         amount: tenantData.amount,
         amountType: tenantData.amountType,
         incrementPercent: tenantData.incrementPercent,
@@ -97,9 +103,14 @@ async function updateTenant(id, tenantData) {
 
                 const endDate = new Date(startDate);
                 endDate.setFullYear(endDate.getFullYear() + tenantData.contractYears);
-                endDate.setTime(endDate.getTime() - 86400000); // Subtract 1 day in milliseconds
+                endDate.setDate(endDate.getDate() - 1); // Subtract 1 day
                 
-                row.getCell(12).value = endDate.toISOString().split('T')[0];
+                // Format YYYY-MM-DD in local time
+                const formattedEndDate = endDate.getFullYear() + "-" + 
+                    String(endDate.getMonth() + 1).padStart(2, "0") + "-" + 
+                    String(endDate.getDate()).padStart(2, "0");
+
+                row.getCell(12).value = formattedEndDate;
 
                 console.log("i am updated data ",tenantData); //test
 

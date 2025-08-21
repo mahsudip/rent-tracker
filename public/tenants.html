@@ -56,7 +56,7 @@
                 }
             .mobile .tenantName {
                 font-size: 16px;
-                font-weight: bold;
+                font-weight: 500;
                 }
             .mobile .collapseBtn{
                 display: block!important;
@@ -66,15 +66,29 @@
                 }
             .mobile .tenantCompany {
                 font-size: 14px;
-                font-style: italic;
-                margin-top: -15px;
+                font-weight: 100;
+                margin-top: -18px;
                 }
+            .mobile-dflex {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px!important;
+            }
+            .mobile-dflex label {
+                font-weight: 400!important;
+            }
+            .mobile-dflex p {
+                margin: 0;
+                font-weight: 600;
+                text-align: right;
+            }
         }
 
                 
     </style>
 </head>
 <body>
+    <!-- Top Navbar (visible on desktop) -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="index.html">SM</a>
@@ -95,12 +109,28 @@
                     <li class="nav-item">
                         <a class="nav-link" href="payments.html">Payments</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reports.html">Reports</a>
-                    </li>
                 </ul>
             </div>
         </div>
+    </nav>
+    <!-- Bottom Navbar (visible on mobile) -->
+    <nav class="bottom-navbar">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fa-solid fa-house bottom-nav-icon"></i>
+            <span class="bottom-nav-label">Dashboard</span>
+        </a>
+        <a href="properties.html" class="bottom-nav-item">
+            <i class="fa-solid fa-building bottom-nav-icon"></i>
+            <span class="bottom-nav-label">Properties</span>
+        </a>
+        <a href="tenants.html" class="bottom-nav-item active">
+            <i class="fa-solid fa-users bottom-nav-icon"></i>
+            <span class="bottom-nav-label">Tenants</span>
+        </a>
+        <a href="payments.html" class="bottom-nav-item">
+            <i class="fa-solid fa-money-bills bottom-nav-icon"></i>
+            <span class="bottom-nav-label">Payments</span>
+        </a>
     </nav>
 
     <div class="container mt-4">
@@ -365,41 +395,41 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Full Name:</label>
                                 <p id="viewFullName" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Company Name:</label>
                                 <p id="viewCompany" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Contact Number:</label>
                                 <p id="viewContact" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Citizenship Number:</label>
                                 <p id="viewCitizen" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Address:</label>
                                 <p id="viewAddress" class="form-control-static"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Property:</label>
                                 <p id="viewProperty" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Section:</label>
                                 <p id="viewSection" class="form-control-static">-</p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Contract Start Date:</label>
                                 <p id="viewStartDate" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Contract End Date:</label>
                                 <p id="viewEndDate" class="form-control-static"></p>
                             </div>
@@ -408,21 +438,21 @@
                     
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Rent Amount:</label>
                                 <p id="viewRentAmount" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Rent Increment Percentage:</label>
                                 <p id="viewIncrementPercent" class="form-control-static"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Increment Interval:</label>
                                 <p id="viewIncrementInterval" class="form-control-static"></p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 mobile-dflex">
                                 <label class="form-label fw-bold">Status:</label>
                                 <p id="viewStatus" class="form-control-static"></p>
                             </div>

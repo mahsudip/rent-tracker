@@ -128,20 +128,20 @@ function loadTenants() {
                     <td class="tenantName" data-title="Name:">${tenant.fullName}</td>
                     <td class="tenantCompany" data-title="Company:">${tenant.company || 'N/A'}</td>
                     <td class="mobile-hide" data-title="Mobile No.:">${tenant.contact}</td>
-                    <td class="mobile-hide" data-title="Property:">${propertyMap[tenant.propertyId] || 'N/A'}</td>
+                    <td class="mobile-hide" data-title="Property:">${propertyMap[tenant.propertyId] || '-'}</td>
                     <td class="mobile-hide" data-title="Contract:">${tenant.contractYears} years</td>
                     <td class="mobile-hide" data-title="Started At:">${tenant.startDateAD}</td>
                     <td class="mobile-hide" data-title="Amount:">NPR ${tenant.amount}/ ${tenant.amountType}</td>
                     <td class="mobile-hide" data-title="Status:"><span class="badge ${tenant.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${tenant.status}</span></td>
                     <td class="action-btns">
-                        <button class="btn btn-sm btn-primary view-btn" data-id="${tenant.id}" title="View Details">
-                            <i class="fa-solid fa-eye" style="color: #ffffff;"></i>
+                        <button class="btn btn-sm  view-btn" data-id="${tenant.id}" title="View Details">
+                            <i class="fa-solid fa-eye" style="color: #7f37d6ff; font-size:18px;"></i>
                         </button>
-                        <button class="btn btn-sm btn-primary edit-btn" data-id="${tenant.id}" title="Edit">
-                            <i class="fa-solid fa-pen" style="color: #ffffff;"></i>
+                        <button class="btn btn-sm edit-btn" data-id="${tenant.id}" title="Edit">
+                            <i class="fa-solid fa-pen" style="color: #7f37d6ff; font-size:18px;"></i>
                         </button>
-                        <button class="btn btn-sm btn-danger delete-btn" data-id="${tenant.id}" title="Delete">
-                            <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+                        <button class="btn btn-sm delete-btn" data-id="${tenant.id}" title="Delete">
+                            <i class="fa-solid fa-trash" style="color: #f55353ff; font-size:18px;"></i>
                         </button>
                     </td>
                 `;
@@ -243,12 +243,17 @@ function viewTenant(tenantId) {
             const startDate = new Date(tenant.startDateAD);
             const endDate = new Date(tenant.endDateAD);
             
-            const formattedStartDate = startDate.toLocaleDateString();
-            const formattedEndDate = endDate.toLocaleDateString();
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedStartDate = startDate
+                .toLocaleDateString('en-GB', options)
+                // .toUpperCase(); // e.g., "01 AUG 2025"
+            const formattedEndDate = endDate
+                .toLocaleDateString('en-GB', options)
+                // .toUpperCase();
             
             // Populate the view modal
             document.getElementById('viewFullName').textContent = tenant.fullName;
-            document.getElementById('viewCompany').textContent = tenant.company;
+            document.getElementById('viewCompany').textContent = tenant.company || '-';
             document.getElementById('viewContact').textContent = tenant.contact;
             document.getElementById('viewCitizen').textContent = tenant.citizenNumber;
             document.getElementById('viewAddress').textContent = tenant.address;
@@ -256,7 +261,7 @@ function viewTenant(tenantId) {
             document.getElementById('viewSection').textContent = tenant.section || '-';
             document.getElementById('viewStartDate').textContent = formattedStartDate;
             document.getElementById('viewEndDate').textContent = formattedEndDate;
-            document.getElementById('viewRentAmount').textContent = `NPR ${tenant.amount} (${tenant.amountType === 'month' ? 'Monthly' : 'Yearly'})`;
+            document.getElementById('viewRentAmount').textContent = `NPR ${tenant.amount}/ ${tenant.amountType === 'month' ? 'mo' : 'yr'}`;
             document.getElementById('viewIncrementPercent').textContent = `${tenant.incrementPercent}%`;
             document.getElementById('viewIncrementInterval').textContent = `${tenant.incrementInterval} years`;
             document.getElementById('viewStatus').textContent = tenant.status;

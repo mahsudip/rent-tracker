@@ -290,6 +290,14 @@ function renderPaymentsTable(payments) {
     }
 
 function updatePaymentModal(payment) {
+    // Format dates
+    const paymentDate = new Date(payment.paymentDate);
+    
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    const formattedPaymentDate = paymentDate
+        .toLocaleDateString('en-GB', options)
+        // .toUpperCase(); // e.g., "01 AUG 2025"
+
     // Check if this is a security deposit
     const isDeposit = (payment.type && 
                       (payment.type.toLowerCase() === 'security_deposit' || 
@@ -305,7 +313,7 @@ function updatePaymentModal(payment) {
     document.getElementById('viewPropertyName').textContent = payment.propertyName;
     document.getElementById('viewMonthYear').textContent = monthYear;
     document.getElementById('viewBaseRent').textContent = isDeposit ? 'N/A' : `NPR ${payment.baseRent}`;
-    document.getElementById('viewPaymentDate').textContent = payment.paymentDate;
+    document.getElementById('viewPaymentDate').textContent = formattedPaymentDate;
     document.getElementById('viewPaymentMethod').textContent = payment.paymentMethod;
     document.getElementById('viewTotalAmount').textContent = `NPR ${payment.totalAmount}`;
     
