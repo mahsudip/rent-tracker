@@ -34,7 +34,7 @@ router.get('/renewals', async (req, res) => {
         
         const upcoming = tenants.filter(tenant => {
             const endDate = new Date(tenant.endDateAD);
-            return endDate > now && endDate <= nextMonth;
+            return endDate > now;
         });
         
         res.json(upcoming);
