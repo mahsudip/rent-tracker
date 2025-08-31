@@ -24,13 +24,17 @@ function loadProperties() {
             properties.forEach(property => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${property.name}</td>
-                    <td>${property.address}</td>
-                    <td>${property.type === 'whole' ? 'Whole Property' : 'Section-wise'}</td>
-                    <td>${property.sections.join(', ') || '-'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary edit-btn" data-id="${property.id}"><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-sm btn-danger delete-btn" data-id="${property.id}"><i class="bi bi-trash-fill"></i></button>
+                    <td class="card-title" data-title="Month of:">${property.name}</td>
+                    <td class="property-address" data-title="Address:">${property.address}</td>
+                    <td class="property-type" data-title="Type:">${property.type === 'whole' ? 'Whole Property' : 'Section-wise'}</td>
+                    <td class="property-section" data-title="Section:">${property.sections.join(', ') || '-'}</td>
+                    <td class="property-action-btns">
+                        <button class="btn btn-sm edit-btn" data-id="${property.id}">
+                            <i class="fa-solid fa-pen" style="color: #7f37d6ff; font-size:18px;"></i>
+                        </button>
+                        <button class="btn btn-sm delete-btn" data-id="${property.id}">
+                            <i class="fa-solid fa-trash" style="color: #f55353ff; font-size:18px;"></i>
+                        </button>
                     </td>
                 `;
                 tbody.appendChild(row);

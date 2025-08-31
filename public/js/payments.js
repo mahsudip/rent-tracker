@@ -160,6 +160,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function renderPaymentsTable(payments) {
     elements.paymentTableBody.innerHTML = payments.map(payment => {
+        // Format dates
+        const paymentDate = new Date(payment.paymentDate);
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const formattedPaymentDate = paymentDate
+            .toLocaleDateString('en-GB', options)
+            // .toUpperCase(); // e.g., "01 AUG 2025"
+
         // More robust deposit detection:
         // 1. First check if type exists and indicates deposit
         // 2. Fall back to checking if it's a deposit by amount or missing month
@@ -174,19 +181,19 @@ function renderPaymentsTable(payments) {
         
         return `
             <tr>
-                <td>${monthYear}</td>
-                <td>${payment.tenantName}</td>
-                <td>${payment.propertyName}</td>
-                <td>${isDeposit ? 'N/A' : `NPR ${payment.baseRent}`}</td>
-                <td>NPR ${payment.totalAmount}</td>
-                <td>${payment.paymentDate}</td>
-                <td>${payment.paymentMethod}</td>
-                <td>
-                    <button class="btn btn-sm btn-info view-btn" data-id="${payment.id}" title="View Details">
-                        <i class="bi bi-eye-fill"></i>
+                <td class="card-title" data-title="Month of:">${monthYear}</td>
+                <td class="tenant-name" data-title="Tenant:">${payment.tenantName}</td>
+                <td class="mobile-hide" data-title="Property:">${payment.propertyName}</td>
+                <td class="rent-amt" data-title="Rent Amt:">${isDeposit ? '-' : `रु ${payment.baseRent}`}</td>
+                <td class="payment-amt" data-title="Paid Amt:">रु ${payment.totalAmount}</td>
+                <td class="payment-date" data-title="Paid Date:">${formattedPaymentDate}</td>
+                <td class="mobile-hide" data-title="Payment Type:">${payment.paymentMethod}</td>
+                <td class="payment-action-btns">
+                    <button class="btn btn-sm view-btn" data-id="${payment.id}" title="View Details">
+                        <i class="fa-solid fa-eye" style="color: #7f37d6ff; font-size:18px;"></i>
                     </button>
-                    <button class="btn btn-sm btn-danger delete-btn" data-id="${payment.id}" title="Delete">
-                        <i class="bi bi-trash-fill"></i>
+                    <button class="btn btn-sm delete-btn" data-id="${payment.id}" title="Delete">
+                        <i class="fa-solid fa-trash" style="color: #f55353ff; font-size:18px;"></i>
                     </button>
                 </td>
             </tr>
@@ -312,20 +319,20 @@ function updatePaymentModal(payment) {
     document.getElementById('viewTenantName').textContent = payment.tenantName;
     document.getElementById('viewPropertyName').textContent = payment.propertyName;
     document.getElementById('viewMonthYear').textContent = monthYear;
-    document.getElementById('viewBaseRent').textContent = isDeposit ? 'N/A' : `NPR ${payment.baseRent}`;
+    document.getElementById('viewBaseRent').textContent = isDeposit ? 'N/A' : `रु ${payment.baseRent}`;
     document.getElementById('viewPaymentDate').textContent = formattedPaymentDate;
     document.getElementById('viewPaymentMethod').textContent = payment.paymentMethod;
-    document.getElementById('viewTotalAmount').textContent = `NPR ${payment.totalAmount}`;
+    document.getElementById('viewTotalAmount').textContent = `रु ${payment.totalAmount}`;
     
     // Additional amounts
     document.getElementById('viewAdditionalAmount').textContent = 
-        payment.additionalAmount > 0 ? `NPR +${payment.additionalAmount}` : '-';
+        payment.additionalAmount > 0 ? `रु +${payment.additionalAmount}` : '-';
     document.getElementById('viewAdditionalNotes').textContent = 
         payment.additionalNotes || '-';
     
     // Deduction amounts
     document.getElementById('viewDeductionAmount').textContent = 
-        payment.deductionAmount > 0 ? `NPR -${payment.deductionAmount}` : '-';
+        payment.deductionAmount > 0 ? `रु -${payment.deductionAmount}` : '-';
     
     // Payment method details
     const chequeDetails = document.getElementById('viewChequeDetails');

@@ -84,7 +84,7 @@
                 <div class="card stat-card bg-info mb-3 animate-fade-in">
                     <div class="card-header">This Month's Revenue</div>
                     <div class="card-body">
-                        <h5 class="card-title" id="monthlyRevenue">NPR 284,500</h5>
+                        <h5 class="card-title" id="monthlyRevenue">रु 284,500</h5>
                         <p class="card-text small">12% increase</p>
                         <i class="bi bi-currency-rupee card-icon"></i>
                     </div>
@@ -123,7 +123,7 @@
                                 <tbody id="recentPayments">
                                     <tr>
                                         <td>John Smith</td>
-                                        <td>NPR 25,000</td>
+                                        <td>रु 25,000</td>
                                         <td>2023-06-15</td>
                                         <td><span class="badge bg-success">Paid</span></td>
                                     </tr>
@@ -210,7 +210,7 @@
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
-                        label: 'Monthly Revenue (NPR)',
+                        label: 'Monthly Revenue (रु)',
                         data: [185000, 210000, 195000, 240000, 265000, 284500],
                         borderColor: '#4361ee',
                         backgroundColor: 'rgba(67, 97, 238, 0.1)',
@@ -232,7 +232,7 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
-                                    return 'NPR ' + value.toLocaleString();
+                                    return 'रु ' + value.toLocaleString();
                                 }
                             }
                         }

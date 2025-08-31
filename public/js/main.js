@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/api/payments/monthly')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('monthlyRevenue').textContent = `NPR ${data.total}`;
+            document.getElementById('monthlyRevenue').textContent = `रु ${data.total}`;
         });
 
     //get recent 5
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${payment.tenantName}</td>
-                    <td>NPR ${payment.totalAmount}</td>
+                    <td>रु ${payment.totalAmount}</td>
                     <td>${payment.paymentDate}</td>
                     <td><span class="badge bg-success">Paid</span></td>
                 `;

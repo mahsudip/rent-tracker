@@ -8,84 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="css/style.css" rel="stylesheet">
 
-        <style>
-        @media only screen and (max-width: 800px) {
-            .mobile table{
-                width: 100%;
-            }
-            .mobile thead{
-                display: none;
-            }
-            .mobile tbody,
-            .mobile tr,
-            .mobile td {
-                display: block;
-                border: none;
-            }            
-            .mobile tr{
-                background-color: white;
-                position: relative;
-                padding: 10px 5px;
-                margin-bottom: 10px;
-                border-radius: 10px;
-            }
-            .table>:not(caption)>*>*{
-                background-color: transparent;
-                box-shadow: none;
-            }
-            .mobile .action-btns{
-                position: absolute;
-                top: 18px;
-                right: 10px;
-            }
-            .mobile .mobile-hide{
-                display: none;
-            }
-            .mobile td:before {
-                content: attr(data-title);
-                /* position: absolute; */
-                /* left: 6px; */
-                font-size: 14px;
-                font-weight: 600;
-                display: inline-block;
-                /* width: 150px; */
-                text-align: left;
-                }
-            .mobile .tenantName:before {
-                content: none;
-                }
-            .mobile .tenantName {
-                font-size: 16px;
-                font-weight: 500;
-                }
-            .mobile .collapseBtn{
-                display: block!important;
-            }
-            .mobile .tenantCompany:before {
-                content: none;
-                }
-            .mobile .tenantCompany {
-                font-size: 14px;
-                font-weight: 100;
-                margin-top: -18px;
-                }
-            .mobile-dflex {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 5px!important;
-            }
-            .mobile-dflex label {
-                font-weight: 400!important;
-            }
-            .mobile-dflex p {
-                margin: 0;
-                font-weight: 600;
-                text-align: right;
-            }
-        }
 
-                
-    </style>
 </head>
 <body>
     <!-- Top Navbar (visible on desktop) -->
@@ -148,14 +71,14 @@
         </div>
 
         <!-- filter show -->
-        <div class="row mb-3 align-items-end">
-            <div class="col-md-3">
+        <div class="row align-items-end mb-3" id="filterRow" style="display: none;">
+            <div class="col-sm-6">
                 <label for="filterTenant" class="form-label">Filter by Tenant</label>
                 <select class="form-select" id="filterTenant">
                     <option value="">All Tenants</option>
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-6">
                 <label for="filterMonth" class="form-label">Filter by Month</label>
                 <select class="form-select" id="filterMonth">
                     <option value="">All Months</option>
@@ -170,6 +93,12 @@
             </div>
         </div>
 
+        <!-- Toggle button -->
+        <button id="toggleFilter" class="btn btn-secondary mb-3 w-100">Show Filter</button>
+
+
+
+        <!-- table show -->
         <div class="table-responsive mobile">
             <table class="table table-striped">
                 <thead>
@@ -227,7 +156,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Base Rent (NPR)</label>
+                                    <label class="form-label">Base Rent (रु)</label>
                                     <input type="number" class="form-control" id="baseRent" readonly>
                                 </div>
                             </div>
@@ -245,7 +174,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Total Amount (NPR)</label>
+                                    <label class="form-label">Total Amount (रु)</label>
                                     <input type="number" class="form-control" id="totalAmount" readonly>
                                 </div>
                             </div>
@@ -254,7 +183,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Additional Amount (NPR)</label>
+                                    <label class="form-label">Additional Amount (रु)</label>
                                     <input type="number" class="form-control" id="additionalAmount" min="0" value="0">
                                 </div>
                                 <div class="mb-3">
@@ -264,7 +193,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Deduction Amount (NPR)</label>
+                                    <label class="form-label">Deduction Amount (रु)</label>
                                     <input type="number" class="form-control" id="deductionAmount" min="0" value="0">
                                 </div>
                             </div>
@@ -329,7 +258,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Deposit Amount (NPR)</label>
+                            <label class="form-label">Deposit Amount (रु)</label>
                             <input type="number" class="form-control" id="depositAmount" required>
                         </div>
                         <div class="mb-3">
@@ -473,5 +402,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/payments.js"></script>
+    <script>
+        document.getElementById("toggleFilter").addEventListener("click", function () {
+    const filterRow = document.getElementById("filterRow");
+    
+    if (filterRow.style.display === "none") {
+        filterRow.style.display = "flex"; // show again
+        this.textContent = "Hide Filter";
+    } else {
+        filterRow.style.display = "none"; // hide
+        this.textContent = "Show Filter";
+    }
+});
+
+    </script>
 </body>
 </html>

@@ -70,7 +70,7 @@ function loadTenants() {
                     <td>${tenant.propertyName}</td>
                     <td>${tenant.section || '-'}</td>
                     <td>${tenant.contractYears} years</td>
-                    <td>NPR ${tenant.amount} (${tenant.amountType})</td>
+                    <td>रु ${tenant.amount} (${tenant.amountType})</td>
                     <td>${tenant.status}</td>
                     <td>
                         <button class="btn btn-sm btn-primary edit-btn" data-id="${tenant.id}">Edit</button>
@@ -125,16 +125,16 @@ function loadTenants() {
             tenants.forEach(tenant => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="tenantName" data-title="Name:">${tenant.fullName}</td>
+                    <td class="card-title" data-title="Name:">${tenant.fullName}</td>
                     <td class="tenantCompany" data-title="Company:">${tenant.company || 'N/A'}</td>
                     <td class="mobile-hide" data-title="Mobile No.:">${tenant.contact}</td>
                     <td class="mobile-hide" data-title="Property:">${propertyMap[tenant.propertyId] || '-'}</td>
                     <td class="mobile-hide" data-title="Contract:">${tenant.contractYears} years</td>
                     <td class="mobile-hide" data-title="Started At:">${tenant.startDateAD}</td>
-                    <td class="mobile-hide" data-title="Amount:">NPR ${tenant.amount}/ ${tenant.amountType}</td>
+                    <td class="mobile-hide" data-title="Amount:">रु ${tenant.amount}/ ${tenant.amountType}</td>
                     <td class="mobile-hide" data-title="Status:"><span class="badge ${tenant.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${tenant.status}</span></td>
                     <td class="action-btns">
-                        <button class="btn btn-sm  view-btn" data-id="${tenant.id}" title="View Details">
+                        <button class="btn btn-sm view-btn" data-id="${tenant.id}" title="View Details">
                             <i class="fa-solid fa-eye" style="color: #7f37d6ff; font-size:18px;"></i>
                         </button>
                         <button class="btn btn-sm edit-btn" data-id="${tenant.id}" title="Edit">
@@ -261,7 +261,7 @@ function viewTenant(tenantId) {
             document.getElementById('viewSection').textContent = tenant.section || '-';
             document.getElementById('viewStartDate').textContent = formattedStartDate;
             document.getElementById('viewEndDate').textContent = formattedEndDate;
-            document.getElementById('viewRentAmount').textContent = `NPR ${tenant.amount}/ ${tenant.amountType === 'month' ? 'mo' : 'yr'}`;
+            document.getElementById('viewRentAmount').textContent = `रु ${tenant.amount}/ ${tenant.amountType === 'month' ? 'mo' : 'yr'}`;
             document.getElementById('viewIncrementPercent').textContent = `${tenant.incrementPercent}%`;
             document.getElementById('viewIncrementInterval').textContent = `${tenant.incrementInterval} years`;
             document.getElementById('viewStatus').textContent = tenant.status;
